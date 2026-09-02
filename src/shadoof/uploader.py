@@ -173,7 +173,8 @@ def read_hilltop_dsn(dsn, raw_xml=False):
         if Path(path).suffix == ".dsn":
             outputs += read_hilltop_dsn(path, raw_xml=raw_xml)
         else:
-            outputs += read_hilltop_xml(path, raw_xml=raw_xml)
+            if os.path.getsize(path) != 0:
+                outputs += read_hilltop_xml(path, raw_xml=raw_xml)
     return outputs
 
 
