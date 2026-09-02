@@ -13,7 +13,7 @@ def sanitise_xml(xml_str):
 def millisecond_remover(xml_str):
     """Remove millisecond timestamps."""
     return re.sub(
-        r"<T>(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d).\d+<\/T>", r"<T>\1<\/T>", xml_str
+        r"<T>(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d).\d+<\/T>", r"<T>\1</T>", xml_str
     )
 
 
