@@ -12,12 +12,12 @@ import whurl
 def get_audit_dict(whurl_measurement):
     """Get audit details in desired dict format."""
     return {
-            "site": whurl_measurement.site_name,
-            "data_source": whurl_measurement.data_source.name,
-            "ts_type": whurl_measurement.data_source.ts_type,
-            "start_date": whurl_measurement.data.timeseries.index[0],
-            "end_date": whurl_measurement.data.timeseries.index[-1],
-        }
+        "site": whurl_measurement.site_name,
+        "data_source": whurl_measurement.data_source.name,
+        "ts_type": whurl_measurement.data_source.ts_type,
+        "start_date": whurl_measurement.data.timeseries.index[0],
+        "end_date": whurl_measurement.data.timeseries.index[-1],
+    }
 
 
 def get_whurl_audit(whurl_root):
@@ -77,7 +77,9 @@ def write_access_row(
     )
 
     cursor = cnxn.cursor()
-    print(values)  # Actually good to have some feedback - not just a debug print
+    print(
+        "Writing to access: ", values
+    )  # Actually good to have some feedback - not just a debug print
     cursor.execute(insert_query, values)
     cursor.commit()
 

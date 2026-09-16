@@ -169,7 +169,7 @@ def read_hilltop_dsn(dsn, raw_xml=False):
     source_file = regex.findall(dsn_text)
     outputs = []
     for path in source_file:
-        print(path)
+        print("reading from: " + path)
         if Path(path).suffix == ".dsn":
             outputs += read_hilltop_dsn(path, raw_xml=raw_xml)
         else:
@@ -196,7 +196,35 @@ def write_to_hilltop(input_file, destination, raw_xml=False):
 
     hts_com = ToHilltop(destination)
     for o in outputs:
-        print(o[1])
         audit.write_access_row(audit.get_audit_destination(destination), **o[1])
         hts_com.putData(**o[0])
     hts_com.close()
+
+
+def write_to_hilltop_chain(input_file, destination_list, raw_xml=False):
+    """Write a data file to a given Hilltop file."""
+
+    for destination in destination_list:
+        if os.path.splitext(destination)[1] != ".hts":
+            raise ValueError(f"Destination must be a .hts file, path is {destination}")
+    outputs = None
+    match os.path.splitext(input_file)[1]:
+        case ".xml":
+            outputs = read_hilltop_xml(input_file, raw_xml=raw_xml)
+        case ".dsn":
+            outputs = read_hilltop_dsn(input_file, raw_xml=raw_xml)
+        case _:
+            raise ValueError(
+                f"Unrecognised input file type '{os.path.splitext(input_file)[1]}'. Full path is {input_file}."
+            )
+
+    prev_source = None
+    for destination in destination_list:
+        hts_com = ToHilltop(destination)
+        for o in outputs:
+            if prev_source is not None:
+                o[1]["source"] = prev_source
+            audit.write_access_row(audit.get_audit_destination(destination), **o[1])
+            hts_com.putData(**o[0])
+        hts_com.close()
+        prev_source = destination
