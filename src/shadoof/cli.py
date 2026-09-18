@@ -17,7 +17,7 @@ def main(
     pass_through_destination: Annotated[
         list[str],
         typer.Argument(help="Additional path of hts file to receive data chained"),
-    ],
+    ] = None,
     raw_xml: Annotated[
         bool,
         typer.Option("--raw_xml", "-r", help="Whether to skip pre-xml parsing"),
