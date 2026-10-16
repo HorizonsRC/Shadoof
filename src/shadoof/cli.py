@@ -33,6 +33,6 @@ def main(
 
 if __name__ == "__main__":
     main(
-        r"\\Ares\Environmental Data Validation\Air Temperature\Documents\hydrobot_batch\402\at_depth_home\hydrobot_dsn.dsn",
-        r"\\ares\Hydrology\Hydrology Workspace\Sam I\hydrobot_shadoof_demo\end_product_examples\tester.hts",
+        r"\\example\xml\file.xml",
+        r"\\example\hts\file.hts",
     )
