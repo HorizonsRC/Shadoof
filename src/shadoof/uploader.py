@@ -130,7 +130,9 @@ class ToHilltop:
             )
 
         for row in df.itertuples():
-            if [i for i in row[1:] if not pd.isna(i)]:
+            if pd.isna(row[0]):
+                self.dput.PutGap()
+            else:
                 tm = row.Index.to_pydatetime()
                 tm = tm.replace(tzinfo=UTC)  # Remove the time zone win32com hates it
                 self.vtTime = tm
@@ -139,8 +141,6 @@ class ToHilltop:
                     for (data, info) in zip(row[1:], data_type_list, strict=True)
                 ]
                 self.dput.PutArray(self.vtTime, self.vtValues)
-            else:
-                self.dput.PutGap()
 
 
 def read_hilltop_xml(xml, raw_xml=False):
