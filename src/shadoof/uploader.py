@@ -60,7 +60,7 @@ class ToHilltop:
 
         # Variants for receiving the date and values  They have to be initialised, not just declared.
         # We give a dummy date to get started
-        self.vtTime = VARIANT(pythoncom.VT_DATE, pywintypes.Time(datetime(2024, 1, 1)))
+        self.vtTime = VARIANT(pythoncom.VT_DATE, pywintypes.Time(datetime(1900, 1, 1)))
         self.vtValue = VARIANT(pythoncom.VT_R4, 0.0)
         self.vtValues = VARIANT(
             pythoncom.VT_BYREF | pythoncom.VT_ARRAY | pythoncom.VT_VARIANT, []
@@ -76,7 +76,7 @@ class ToHilltop:
         """
         return self.dput.Close
 
-    def putData(self, data_source_name, ts_type, item_info, site_name, data):
+    def put_data(self, data_source_name, ts_type, item_info, site_name, data):
         data.attrs["timeSeriesType"] = tstype_converter(ts_type)  # time series type
         data.attrs["featureOfInterest"] = site_name  # Site
         data.attrs["procedure"] = data_source_name  # Datasource
@@ -85,23 +85,6 @@ class ToHilltop:
             item_info = ["I"]
 
         self._put(data, item_info)
-
-    # Write a Pandas Frame
-    def put_std(self, df):
-        """Insert Standard data into Hilltop COM."""
-        df.attrs["timeSeriesType"] = 1
-        self._put(df, ["F"])
-
-    def put_qual(self, df):
-        """Insert Quality data into hilltop COM."""
-        df.attrs["timeSeriesType"] = 2
-        self._put(df, ["I"])
-
-    def put_check(self, df, data_type_list):
-        """Insert check data into hilltop COM."""
-
-        df.attrs["timeSeriesType"] = 3
-        self._put(df, data_type_list)
 
     def _put(self, df, data_type_list):
         """Put data of arbitrary type to Hilltop via COM."""
@@ -200,7 +183,7 @@ def write_to_hilltop(input_file, destination, raw_xml=False):
     hts_com = ToHilltop(destination)
     for o in outputs:
         audit.write_access_row(audit.get_audit_destination(destination), **o[1])
-        hts_com.putData(**o[0])
+        hts_com.put_data(**o[0])
     hts_com.close()
 
 
@@ -228,6 +211,6 @@ def write_to_hilltop_chain(input_file, destination_list, raw_xml=False):
             if prev_source is not None:
                 o[1]["source"] = prev_source
             audit.write_access_row(audit.get_audit_destination(destination), **o[1])
-            hts_com.putData(**o[0])
+            hts_com.put_data(**o[0])
         hts_com.close()
         prev_source = destination
