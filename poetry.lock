@@ -2583,14 +2583,14 @@ python-discovery = ">=1.4.2"
 
 [[package]]
 name = "whurl"
-version = "0.2.1"
+version = "0.2.2"
 description = "Which Hydro URL? - Python API wrapper for Hilltop Server"
 optional = false
 python-versions = "<4.0,>=3.14.1"
 groups = ["main"]
 files = [
-    {file = "whurl-0.2.1-py3-none-any.whl", hash = "sha256:1ffcd124cf54cb6483f86c09adcb36deb59823be51c4b44e6fe65504fc517b95"},
-    {file = "whurl-0.2.1.tar.gz", hash = "sha256:aca0887411135ec27392675bb6e33e830f7f73f4b0940418ad121c5c184cf9a6"},
+    {file = "whurl-0.2.2-py3-none-any.whl", hash = "sha256:ffe72135375166a148fa1f335b649af3130d8dc4a6674c57ae732278117a1a21"},
+    {file = "whurl-0.2.2.tar.gz", hash = "sha256:708553c06a72435b7e604191cb125f4a9177a4136e8f1fbf6fa8d03dd094bb80"},
 ]
 
 [package.dependencies]
@@ -2702,4 +2702,4 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.14.1,<4.0"
-content-hash = "cfe7e7c4fe9f2c12670f8a9e3d6a6204e89040418bfa0d2205bdbe6ddeff6f96"
+content-hash = "01185289516783e37452622b03d2e683515a9f4609d68941db67f7934c9a9796"
