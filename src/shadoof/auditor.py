@@ -11,12 +11,18 @@ import whurl
 
 def get_audit_dict(whurl_measurement):
     """Get audit details in desired dict format."""
+
+    sorted_dates = sorted(
+        whurl_measurement.data.timeseries.index[
+            ~whurl_measurement.data.timeseries.index.isna()
+        ]
+    )
     return {
         "site": whurl_measurement.site_name,
         "data_source": whurl_measurement.data_source.name,
         "ts_type": whurl_measurement.data_source.ts_type,
-        "start_date": whurl_measurement.data.timeseries.index[0],
-        "end_date": whurl_measurement.data.timeseries.index[-1],
+        "start_date": sorted_dates[0],
+        "end_date": sorted_dates[-1],
     }
 
 
